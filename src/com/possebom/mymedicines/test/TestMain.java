@@ -11,7 +11,7 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 
 	private Solo solo;
 	private String item;
-	private final long timeout = 10000;
+	private final long timeout = 20000;
 
 	public TestMain() {
 		super(MedicineListActivity.class);
