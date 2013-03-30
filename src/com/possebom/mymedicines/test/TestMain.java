@@ -11,6 +11,7 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 
 	private Solo solo;
 	private String item;
+	private final long timeout = 10000;
 
 	public TestMain() {
 		super(MedicineListActivity.class);
@@ -26,28 +27,40 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 	public void testInsertEmpty(){
 		String text = solo.getString(R.string.alert_title_medicine);
 		solo.clickOnActionBarItem(R.id.menu_add);
+		solo.waitForActivity("MedicineAddActivity", (int) timeout);
 		solo.clickOnActionBarItem(R.id.menu_save);
-		assertTrue("Title not found",solo.waitForText(text));
+		boolean result = solo.waitForText(text, 1, timeout);
+		assertTrue("Title not found",result);
 	}
 	
 	public void testBarcode(){
 		String text = solo.getString(R.string.title_alert_barcodescanner);
 		solo.clickOnActionBarItem(R.id.menu_add);
+		solo.waitForActivity("MedicineAddActivity");
 		solo.clickOnActionBarItem(R.id.menu_barcode);
-		assertTrue("Title not found",solo.waitForText(text));
+		boolean result = solo.waitForText(text, 1, timeout);
+		assertTrue("Title not found : "+text,result);
 	}
 
 	public void testAddAndRemoveItem(){
 		solo.clickOnActionBarItem(R.id.menu_add);
+		solo.waitForActivity("MedicineAddActivity", (int) timeout);
 		solo.enterText(0, item);
 		solo.clickOnActionBarItem(R.id.menu_save);
-		assertTrue(solo.searchText(item));
+		boolean result = solo.waitForText(item, 1, timeout);
+		assertTrue(result);
 		solo.clickOnText(item);
-		assertTrue(solo.searchText(solo.getString(R.string.validity)));
+		String text = solo.getString(R.string.validity);
+		result = solo.waitForText(text, 1, timeout);
+		assertTrue(result);
 		solo.clickOnActionBarHomeButton();
+		solo.waitForText(item, 1, timeout);
 		solo.clickOnText(item);
+		solo.waitForText(text, 1, timeout);
 		solo.clickOnActionBarItem(R.id.menu_delete);
-		assertFalse(solo.searchText(item));
+		solo.waitForActivity(getName(), (int) timeout);
+		result = solo.waitForText(item, 1, timeout);
+		assertFalse(result);
 	}
 
 	@Override
