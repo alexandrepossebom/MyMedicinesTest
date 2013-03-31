@@ -25,6 +25,7 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 	}
 	
 	public void testInsertEmpty(){
+		solo.waitForActivity("MedicineListActivity" ,(int) timeout);
 		String text = solo.getString(R.string.alert_title_medicine);
 		solo.clickOnActionBarItem(R.id.menu_add);
 		solo.waitForActivity("MedicineAddActivity", (int) timeout);
@@ -34,9 +35,10 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 	}
 	
 	public void testBarcode(){
+		solo.waitForActivity("MedicineListActivity" ,(int) timeout);
 		String text = solo.getString(R.string.title_alert_barcodescanner);
 		solo.clickOnActionBarItem(R.id.menu_add);
-		solo.waitForActivity("MedicineAddActivity");
+		solo.waitForActivity("MedicineAddActivity",(int) timeout);
 		solo.clickOnActionBarItem(R.id.menu_barcode);
 		boolean result = solo.waitForText(text, 1, timeout);
 		assertTrue("Title not found : "+text,result);
