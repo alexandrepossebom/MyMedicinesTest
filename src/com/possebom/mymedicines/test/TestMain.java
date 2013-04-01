@@ -1,6 +1,7 @@
 package com.possebom.mymedicines.test;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import com.jayway.android.robotium.solo.Solo;
 import com.possebom.mymedicines.MedicineListActivity;
@@ -12,6 +13,7 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 	private Solo solo;
 	private String item;
 	private final long timeout = 20000;
+	private final String	TAG = "TESTE";
 
 	public TestMain() {
 		super(MedicineListActivity.class);
@@ -31,7 +33,7 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 		solo.waitForActivity("MedicineAddActivity", (int) timeout);
 		solo.clickOnActionBarItem(R.id.menu_save);
 		boolean result = solo.waitForText(text, 1, timeout);
-		assertTrue("Title not found",result);
+		assertTrue("Title not found : " + text,result);
 	}
 	
 	public void testBarcode(){
@@ -45,6 +47,7 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 	}
 
 	public void testAddAndRemoveItem(){
+		solo.waitForActivity("MedicineListActivity" ,(int) timeout);
 		solo.clickOnActionBarItem(R.id.menu_add);
 		solo.waitForActivity("MedicineAddActivity", (int) timeout);
 		solo.enterText(0, item);
@@ -60,8 +63,8 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 		solo.clickOnText(item);
 		solo.waitForText(text, 1, timeout);
 		solo.clickOnActionBarItem(R.id.menu_delete);
-		solo.waitForActivity(getName(), (int) timeout);
-		result = solo.waitForText(item, 1, timeout);
+		solo.waitForActivity("MedicineListActivity" ,(int) timeout);
+		result = solo.waitForText(item, 1, 5000);
 		assertFalse(result);
 	}
 
