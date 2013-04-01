@@ -33,6 +33,8 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 		solo.waitForActivity("MedicineAddActivity", (int) timeout);
 		solo.clickOnActionBarItem(R.id.menu_save);
 		boolean result = solo.waitForText(text, 1, timeout);
+		if(result)
+			solo.takeScreenshot();
 		assertTrue("Title not found : " + text,result);
 	}
 	
@@ -43,6 +45,8 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 		solo.waitForActivity("MedicineAddActivity",(int) timeout);
 		solo.clickOnActionBarItem(R.id.menu_barcode);
 		boolean result = solo.waitForText(text, 1, timeout);
+		if(result)
+			solo.takeScreenshot();
 		assertTrue("Title not found : "+text,result);
 	}
 
@@ -65,6 +69,8 @@ public class TestMain extends ActivityInstrumentationTestCase2<MedicineListActiv
 		solo.clickOnActionBarItem(R.id.menu_delete);
 		solo.waitForActivity("MedicineListActivity" ,(int) timeout);
 		result = solo.waitForText(item, 1, 5000);
+		if(result)
+			solo.takeScreenshot();
 		assertFalse(result);
 	}
 
